@@ -1,5 +1,5 @@
 pipeline {
-    agent { docker { image 'python:alpine' } }
+    agent {label 'master' } }
     stages {
         stage('run') {
             steps {
