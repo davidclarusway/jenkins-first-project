@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    environment {
+        MAVEN_HOME=/opt/apache-maven-3.6.3
+        PATH=$PATH:$MAVEN_HOME/bin
+    }
     stages {
         stage('Build') {
             steps {
