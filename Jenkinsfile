@@ -1,30 +1,16 @@
 pipeline {
-    agent any
-    environment {
-       
-        MAVEN_HOME="/opt/apache-maven-3.6.3"
-        PATH="$PATH:$MAVEN_HOME/bin"
-    }
+    agent { label 'master' }
     stages {
-        stage('Build') {
+        stage('build') {
             steps {
-                sh 'mvn -f hello-app/pom.xml -B -DskipTests clean package'
-            }
-            post {
-                success {
-                    echo "Now Archiving the Artifacts....."
-                    archiveArtifacts artifacts: '**/*.jar'
-                }
+                echo 'Compiling the java source code'
+                sh 'javac Hello.java'
             }
         }
-        stage('Test') {
+        stage('run') {
             steps {
-                sh 'mvn -f hello-app/pom.xml test'
-            }
-            post {
-                always {
-                    junit 'hello-app/target/surefire-reports/*.xml'
-                }
+                echo 'Running the compiled java code.'
+                sh 'java Hello'
             }
         }
     }
